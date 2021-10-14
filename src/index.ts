@@ -1,3 +1,16 @@
-import { BadRequestError } from '@cryptograph-app/error-handlers';
+require('./database/mongo');
+//-------initial population---------
+require('./lib/binance-exchange');
+import express from 'express';
+const app = express();
 
-throw new BadRequestError('this is wrong');
+//----------routes------------
+import ExchangeRouter from './routes/exchange-routes';
+
+// getExchangeInfo();
+
+app.use('/exchange', ExchangeRouter);
+
+app.listen(3000, () => {
+     console.log('coin provider service is up on port 3000');
+});

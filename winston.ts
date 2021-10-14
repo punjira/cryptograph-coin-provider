@@ -8,21 +8,21 @@ export enum LOG_LEVELS {
 }
 
 const customLogger = winston.createLogger({
-     level: 'info',
+     level: LOG_LEVELS.INFO,
      format: winston.format.json(),
-     defaultMeta: { service: 'user-service' },
+     defaultMeta: { service: 'coin-provider service' },
      transports: [
           new winston.transports.File({
                filename: path.join(__dirname, '../logs/info.log'),
-               level: 'info',
+               level: LOG_LEVELS.INFO,
           }),
           new winston.transports.File({
                filename: path.join(__dirname, '../logs/debug.log'),
-               level: 'debug',
+               level: LOG_LEVELS.DEBUG,
           }),
           new winston.transports.File({
                filename: path.join(__dirname, '../logs/error.log'),
-               level: 'error',
+               level: LOG_LEVELS.ERROR,
           }),
           new winston.transports.File({
                filename: path.join(__dirname, '../logs/combined.log'),
@@ -39,8 +39,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export const logger = (level: LOG_LEVELS, message: string, file?: string) => {
-     const customizedMessage = `NEW LOG MESSAGE\t${Date()}\tfile: ${
-          file ? file : 'undefined'
+     const customizedMessage = `NEW LOG MESSAGE   ${Date()}      file: ${
+          file ? file : 'not specified'
      }\tmessage: ${message}`;
      customLogger.log({
           level,

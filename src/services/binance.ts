@@ -3,6 +3,7 @@
  */
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { logger, LOG_LEVELS } from '../../winston';
 import {
      binanceBaseAddress,
      binanceExchangeInfo,
@@ -12,20 +13,27 @@ import {
 interface BinanceExchangeResponse {
      symbols: {
           symbol: string;
-          status: string;
-     };
+     }[];
 }
 
-export const getExchangeInfo = () => {
+export const getExchangeInfo = (): Promise<string[]> => {
      return new Promise((resolve, reject) => {
           const options: AxiosRequestConfig = {
                method: 'GET',
                url: binanceBaseAddress + binancePrefix + binanceExchangeInfo,
           };
           axios(options)
-               .then((data: AxiosResponse<BinanceExchangeResponse>) => {})
+               .then((data: AxiosResponse<BinanceExchangeResponse>) => {
+                    resolve(data.data.symbols.map((el) => el.symbol));
+               })
                .catch((err) => {
-                    console.log(err);
+                    logger(
+                         LOG_LEVELS.ERROR,
+                         'error getting exchange information from binance ' +
+                              err,
+                         'coin-provider/services/binance.ts'
+                    );
+                    reject(err?.response?.data || 'request failed');
                });
      });
 };

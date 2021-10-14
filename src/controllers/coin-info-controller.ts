@@ -1,13 +1,35 @@
-import { Coin } from '../models/coin-info-model';
-import { CoinInfoAttr } from '../models/coin-info-model';
+import { Coin, CoinModel } from '../models/coin-info';
 
-export function getCoinInfos(): Promise<CoinInfoAttr[]> {
+export function getCoinInfo(keyword: string): Coin | null {
+     return null;
+}
+
+export function getCoinInfos(): Promise<Coin[]> {
      return new Promise((resolve, reject) => {
-          Coin.find({}, (err: any, result) => {
+          CoinModel.find({}, function (err, result) {
                if (err) {
                     return reject(err);
                }
                return resolve(result);
           });
+     });
+}
+
+export function createCoinInfo(data: Coin): Promise<Coin> {
+     return new Promise((resolve, reject) => {});
+}
+
+export function insetManyCoinInfos(data: Coin[]): Promise<void> {
+     return new Promise((resolve, reject) => {
+          CoinModel.insertMany(
+               data,
+               { ordered: false },
+               function (err, result) {
+                    if (err) {
+                         return reject(err);
+                    }
+                    return resolve();
+               }
+          );
      });
 }
