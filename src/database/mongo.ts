@@ -8,7 +8,7 @@ let connected: boolean = false;
      if (connected) {
           return;
      }
-     await mongoose.connect('mongodb://coin-provider-database:27017/coin');
+     await mongoose.connect(`mongodb://${process.env.MONGO_URL}:27017/coin`);
      const db = mongoose.connection;
      db.once('open', () => {
           console.log('connection to mongo db created');

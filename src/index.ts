@@ -14,6 +14,6 @@ app.use(function (req, res, next) {
 
 app.use('/exchange', ExchangeRouter);
 
-app.listen(3000, () => {
-     console.log('coin provider service is up on port 3000');
+app.listen(process.env.PORT, () => {
+     console.log('coin provider service is up on port ', process.env.PORT);
 });
