@@ -7,11 +7,6 @@ const app = express();
 //----------routes------------
 import ExchangeRouter from './routes/exchange-routes';
 
-app.use(function (req, res, next) {
-     console.log('request');
-     next();
-});
-
 app.use('/exchange', ExchangeRouter);
 
 app.listen(process.env.PORT, () => {
