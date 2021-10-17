@@ -4,6 +4,17 @@ export function getCoinInfo(keyword: string): Coin | null {
      return null;
 }
 
+export function getCoinsInfoRequest(req, res) {
+     CoinModel.find({}, function (err, result) {
+          if (err) {
+               return res.status(500).json({
+                    message: 'something went wrong',
+               });
+          }
+          return res.status(200).json({ data: result });
+     });
+}
+
 export function getCoinInfos(): Promise<Coin[]> {
      return new Promise((resolve, reject) => {
           CoinModel.find({}, function (err, result) {

@@ -8,6 +8,6 @@
           "outDir": "./dist"
      },
      "include": ["**/*"],
-     "exclude": ["node_modules"],
+     "exclude": ["node_modules", "logs", "dist"],
      "lib": ["es2015"]
 }

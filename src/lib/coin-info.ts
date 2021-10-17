@@ -23,7 +23,9 @@ import { logger, LOG_LEVELS } from '../../winston';
 
 const logPath = 'coin-provider/lib/coin-info.ts';
 
-export default function getCoinInformation(newExchanges: Exchange[]) {
+export default function getCoinInformation(
+     newExchanges: Exchange[]
+): Promise<boolean> {
      logger(LOG_LEVELS.INFO, 'starting coingecko information fetch', logPath);
      if (!newExchanges.length) {
           logger(
@@ -33,35 +35,43 @@ export default function getCoinInformation(newExchanges: Exchange[]) {
           );
           return;
      }
-     getCoinMarkets()
-          .then(async (data) => {
-               const Documents = createCoinDocumentFromCoingeckoResponse(data);
-               const CoinDocuments = await getCoinInfos();
-               const ValidDocuments = filterCoinInfoOnExchange(
-                    Documents,
-                    newExchanges
-               );
-               const NewDocuments = filterCoinDuplicated(
-                    CoinDocuments,
-                    ValidDocuments
-               );
-               console.log(
-                    'inserting ' + NewDocuments.length + ' new info documents'
-               );
-               return insetManyCoinInfos(NewDocuments);
-          })
-          .then(() => {
-               logger(
-                    LOG_LEVELS.INFO,
-                    'successfully updated coin-info database',
-                    logPath
-               );
-          })
-          .catch((err) => {
-               logger(
-                    LOG_LEVELS.ERROR,
-                    'error while updating coin info database Error: ' + err,
-                    logPath
-               );
-          });
+     return new Promise((resolve, reject) => {
+          getCoinMarkets()
+               .then(async (data) => {
+                    const Documents =
+                         createCoinDocumentFromCoingeckoResponse(data);
+                    const CoinDocuments = await getCoinInfos();
+                    const ValidDocuments = filterCoinInfoOnExchange(
+                         Documents,
+                         newExchanges
+                    );
+                    const NewDocuments = filterCoinDuplicated(
+                         CoinDocuments,
+                         ValidDocuments
+                    );
+                    console.log(
+                         'inserting ' +
+                              NewDocuments.length +
+                              ' new info documents'
+                    );
+                    return insetManyCoinInfos(NewDocuments);
+               })
+               .then(() => {
+                    logger(
+                         LOG_LEVELS.INFO,
+                         'successfully updated coin-info database',
+                         logPath
+                    );
+                    resolve(true);
+               })
+               .catch((err) => {
+                    reject(err);
+                    logger(
+                         LOG_LEVELS.ERROR,
+                         'error while updating coin info database Error: ' +
+                              err,
+                         logPath
+                    );
+               });
+     });
 }

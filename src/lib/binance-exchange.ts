@@ -8,12 +8,7 @@
  */
 
 import { getExchangeInfo } from '../services/binance';
-import {
-     DatabaseConnectionError,
-     InternalServerError,
-} from '@cryptograph-app/error-handlers';
 import { filterUSDTQuotes, findNewDocuments } from '../helpers/exchange-filter';
-import mongoose from 'mongoose';
 import { logger, LOG_LEVELS } from '../../winston';
 
 import {
@@ -23,25 +18,7 @@ import {
 import { getExchanges } from '../controllers/exchange-controller';
 import getCoinInformation from './coin-info';
 
-async function createDatabaseConnection() {
-     await mongoose.connect('mongodb://coin-provider-mongo-srv:27017/coin');
-     const db = mongoose.connection;
-     db.once('open', () => {
-          console.log('connection to database created successfully');
-     });
-     db.on('error', (err) => {
-          // terminate process
-          logger(
-               LOG_LEVELS.ERROR,
-               'error connecting to database , error description: ' + err,
-               'lib/binance-exchange.ts'
-          );
-          throw new DatabaseConnectionError();
-     });
-}
-
 export default (async function () {
-     await createDatabaseConnection();
      logger(
           LOG_LEVELS.INFO,
           'starting binance exchange update process',
@@ -68,6 +45,9 @@ export default (async function () {
                });
           })
           .then((docs) => {
+               console.log(
+                    'binance exchanges successfully updated, running coingecko updates'
+               );
                // get coin info
                return getCoinInformation(docs);
           })
@@ -85,6 +65,6 @@ export default (async function () {
                     'update binance exchange failed' + err,
                     'coin-provider/lib/binance-exchange.ts'
                );
-               throw new InternalServerError();
+               // throw new InternalServerError();
           });
 })();

@@ -7,7 +7,10 @@ const app = express();
 //----------routes------------
 import ExchangeRouter from './routes/exchange-routes';
 
-// getExchangeInfo();
+app.use(function (req, res, next) {
+     console.log('request');
+     next();
+});
 
 app.use('/exchange', ExchangeRouter);
 
