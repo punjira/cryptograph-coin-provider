@@ -1,8 +1,13 @@
-require('./database/mongo');
-//-------initial population---------
-require('./lib/binance-exchange');
 import express from 'express';
 const app = express();
+require('./database/mongo');
+import { natsClient } from './nats/nats-helper';
+natsClient
+     .getInstance()
+     .getClient()
+     .on('connect', () => {
+          require('./lib/binance-exchange');
+     });
 
 //----------routes------------
 import ExchangeRouter from './routes/exchange-routes';
