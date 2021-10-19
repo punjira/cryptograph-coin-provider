@@ -9,7 +9,8 @@
           "start": "node dist/src/index.js",
           "prepare": "husky install",
           "lint": "eslint . --ext .ts",
-          "build": "rimraf dist/ && sh ./scripts/build.sh"
+          "build": "rimraf dist/ && sh ./scripts/build.sh",
+          "generate_docs": "apidoc -i src -o apidoc"
      },
      "keywords": [
           "cryptograph"
