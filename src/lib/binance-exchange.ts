@@ -10,7 +10,7 @@
 import { getExchangeInfo } from '../services/binance';
 import { filterUSDTQuotes, findNewDocuments } from '../helpers/exchange-filter';
 import { logger, LOG_LEVELS } from '../../winston';
-
+import { EXCHANGE_UPDATE_EVENT, natsClient } from '../nats/nats-helper';
 import {
      createExchangeDocumentFromStringArray,
      ExchangeModel,
@@ -45,6 +45,12 @@ export default (async function () {
                });
           })
           .then((docs) => {
+               console.log('publishing new exchanges documents to nats');
+               // strip array from _id, version
+               natsClient.getInstance().publishMessage(
+                    EXCHANGE_UPDATE_EVENT,
+                    docs.map((el) => ({ ticker: el.ticker }))
+               );
                console.log(
                     'binance exchanges successfully updated, running coingecko updates'
                );
@@ -52,7 +58,6 @@ export default (async function () {
                return getCoinInformation(docs);
           })
           .then(() => {
-               // publish new documents to nats service
                logger(
                     LOG_LEVELS.INFO,
                     'updated binance exchanges',
