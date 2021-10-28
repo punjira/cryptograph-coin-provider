@@ -1,6 +1,6 @@
 {
      "name": "coin-provider",
-     "version": "1.0.0",
+     "version": "1.0.1",
      "description": "coin provider for cryptograph application",
      "main": "index.js",
      "scripts": {
