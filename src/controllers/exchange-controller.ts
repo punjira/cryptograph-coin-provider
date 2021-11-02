@@ -1,4 +1,5 @@
-import { Exchange, ExchangeModel } from '../models/exchange-model';
+import { ExchangeModel } from '../models/exchange-model';
+import { Exchange } from '@cryptograph-app/shared-models';
 
 export function getExchanges(): Promise<Exchange[]> {
      return new Promise((resolve, reject) => {
