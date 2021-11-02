@@ -10,7 +10,7 @@ natsClient
      .getInstance()
      .getClient()
      .on('connect', () => {
-          // require('./lib/binance-exchange');
+          require('./lib/binance-exchange');
      });
 
 //----------routes------------
