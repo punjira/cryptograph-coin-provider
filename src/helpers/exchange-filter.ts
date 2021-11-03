@@ -1,4 +1,5 @@
 import { Exchange } from '@cryptograph-app/shared-models';
+import { BinanceSymbol } from '../services/binance';
 
 /**
  *
@@ -6,11 +7,12 @@ import { Exchange } from '@cryptograph-app/shared-models';
  *
  * binance returns all of its supported exchanges, we only want those that end in usdt
  */
-export function filterUSDTQuotes(symbols: string[]): string[] {
+export function filterUSDTQuotes(symbols: BinanceSymbol[]): string[] {
      const usdt_on_quote = /^usdt\w+/;
      const up_down_in_middle = /.*(up|down)\w+/;
      const filtered = symbols
-          .map((el) => el.toLowerCase())
+          .filter((el) => el.status === 'TRADING')
+          .map((el) => el.symbol.toLowerCase())
           .filter((el) => el.split('usdt').length > 1)
           .filter((el) => !usdt_on_quote.test(el))
           .filter((el) => !up_down_in_middle.test(el));
