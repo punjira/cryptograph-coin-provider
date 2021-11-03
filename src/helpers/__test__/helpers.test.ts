@@ -1,18 +1,19 @@
+import { BinanceSymbol } from '../../services/binance';
 import { filterUSDTQuotes } from '../exchange-filter';
 
 describe('helper functions', () => {
      describe('filter usdt based', () => {
-          let pairs: string[];
+          let pairs: BinanceSymbol[];
           let correct_pairs: string[];
           beforeEach(() => {
                pairs = [
-                    'adausdt',
-                    'BTCUSDT',
-                    'bnbUSDT',
-                    'XRPBNB',
-                    'ADATRX',
-                    'TRXUSDT',
-                    'BNBETH',
+                    { symbol: 'adausdt', status: 'TRADING' },
+                    { symbol: 'BTCUSDT', status: 'TRADING' },
+                    { symbol: 'bnbUSDT', status: 'TRADING' },
+                    { symbol: 'XRPBNB', status: 'TRADING' },
+                    { symbol: 'ADATRX', status: 'TRADING' },
+                    { symbol: 'TRXUSDT', status: 'TRADING' },
+                    { symbol: 'BNBETH', status: 'TRADING' },
                ];
                correct_pairs = ['adausdt', 'btcusdt', 'bnbusdt', 'trxusdt'];
           });
