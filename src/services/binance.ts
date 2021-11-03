@@ -13,6 +13,7 @@ import {
 interface BinanceExchangeResponse {
      symbols: {
           symbol: string;
+          status: string;
      }[];
 }
 
