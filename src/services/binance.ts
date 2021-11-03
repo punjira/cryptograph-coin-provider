@@ -11,13 +11,15 @@ import {
 } from '../endpoint';
 
 interface BinanceExchangeResponse {
-     symbols: {
-          symbol: string;
-          status: string;
-     }[];
+     symbols: BinanceSymbol[];
 }
 
-export const getExchangeInfo = (): Promise<string[]> => {
+export interface BinanceSymbol {
+     symbol: string;
+     status: string;
+}
+
+export const getExchangeInfo = (): Promise<BinanceSymbol[]> => {
      return new Promise((resolve, reject) => {
           const options: AxiosRequestConfig = {
                method: 'GET',
@@ -25,7 +27,7 @@ export const getExchangeInfo = (): Promise<string[]> => {
           };
           axios(options)
                .then((data: AxiosResponse<BinanceExchangeResponse>) => {
-                    resolve(data.data.symbols.map((el) => el.symbol));
+                    resolve(data.data.symbols);
                })
                .catch((err) => {
                     logger(
