@@ -1,17 +1,18 @@
+import { createNatsSubscriptions } from './nats/subscription';
+import { MongoConnect } from './database/mongo';
+
 import express from 'express';
-const app = express();
 import cors from 'cors';
 import bodyParser from 'body-parser';
+
+const app = express();
+
 app.use(cors());
 app.use(bodyParser({ extended: true }));
-require('./database/mongo');
-import { natsClient } from './nats/nats-helper';
-natsClient
-     .getInstance()
-     .getClient()
-     .on('connect', () => {
-          require('./lib/binance-exchange');
-     });
+
+MongoConnect(() => {
+     createNatsSubscriptions();
+});
 
 //----------routes------------
 import ExchangeRouter from './routes/exchange-routes';
