@@ -30,7 +30,9 @@ export default (async function () {
                               }))
                          )
                     );
-               return getCoinInformation(data);
+               if (data.length) {
+                    return getCoinInformation(data);
+               }
           })
           .catch((err) => {});
 })();

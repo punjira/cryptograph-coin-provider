@@ -11,7 +11,7 @@ export function createNatsSubscriptions() {
           .getInstance()
           .getClient()
           .on('connect', () => {
-               require('../lib/binance-exchange');
+               require('../lib/offline-exchange');
                const exchange_request_subscription = natsClient
                     .getInstance()
                     .getClient()
