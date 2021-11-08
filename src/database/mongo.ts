@@ -22,9 +22,11 @@ export const MongoConnect = function (callback) {
      });
      db.on('disconnected', () => {
           console.log('mongo connection disconnected, The thing: ');
-          mongoose.connect(`${process.env.MONGO_URL}/coin`, {
-               connectTimeoutMS: 3000,
+          mongoose.connect(`${process.env.MONGO_URL}`, {
+               connectTimeoutMS: 30000,
+               socketTimeoutMS: 30000,
                keepAlive: true,
+               dbName: 'coin',
           });
      });
      db.on('close', () => {});
