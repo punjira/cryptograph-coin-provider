@@ -1,5 +1,4 @@
-import { Coin } from '../models/coin-info';
-import { Exchange } from '@cryptograph-app/shared-models';
+import { Coin, Exchange } from '@cryptograph-app/shared-models';
 
 /**
  *

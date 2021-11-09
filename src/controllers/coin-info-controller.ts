@@ -1,4 +1,5 @@
-import { Coin, CoinModel } from '../models/coin-info';
+import { Coin } from '@cryptograph-app/shared-models';
+import { CoinModel } from '../models/coin-info';
 
 export function getCoinInfo(keyword: string): Coin | null {
      return null;

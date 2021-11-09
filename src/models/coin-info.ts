@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import {} from '@cryptograph-app/shared-models';
+import { Coin, CoinSchema } from '@cryptograph-app/shared-models';
 
-const CoinModel = mongoose.model<Coin>('coin', coinSchema);
+const CoinModel = mongoose.model<Coin>('coin', CoinSchema);
 
-export { CoinModel, Coin, createCoinDocumentFromCoingeckoResponse };
+export { CoinModel };

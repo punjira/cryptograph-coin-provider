@@ -2,6 +2,7 @@
  *
  */
 
+import { CoinGeckoCoin } from '@cryptograph-app/shared-models';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { logger, LOG_LEVELS } from '../../winston';
 import {
@@ -12,9 +13,7 @@ import {
 
 const fs = require('fs');
 
-const getCoinMarketsPage = (
-     page: number
-): Promise<CoinGeckoCoinListResponse[]> => {
+const getCoinMarketsPage = (page: number): Promise<CoinGeckoCoin[]> => {
      return new Promise((resolve, reject) => {
           const options: AxiosRequestConfig = {
                url: coingeckoBaseAddress + coingeckoPrefix + coingeckoMarkets,
@@ -28,7 +27,7 @@ const getCoinMarketsPage = (
                },
           };
           axios(options)
-               .then((data: AxiosResponse<CoinGeckoCoinListResponse[]>) => {
+               .then((data: AxiosResponse<CoinGeckoCoin[]>) => {
                     logger(
                          LOG_LEVELS.INFO,
                          'successfully fetched' +
@@ -50,9 +49,9 @@ const getCoinMarketsPage = (
      });
 };
 
-export const getCoinMarkets = (): Promise<CoinGeckoCoinListResponse[]> => {
+export const getCoinMarkets = (): Promise<CoinGeckoCoin[]> => {
      return new Promise(async (resolve, reject) => {
-          let res: CoinGeckoCoinListResponse[] = [];
+          let res: CoinGeckoCoin[] = [];
           let page: number | undefined = 1;
           while (page) {
                try {

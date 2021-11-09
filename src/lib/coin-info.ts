@@ -11,9 +11,11 @@
  */
 
 import { getCoinMarkets } from '../services/coingecko';
-import { Exchange } from '@cryptograph-app/shared-models';
+import {
+     createCoinDocumentFromCoingeckoResponse,
+     Exchange,
+} from '@cryptograph-app/shared-models';
 import { insetManyCoinInfos } from '../controllers/coin-info-controller';
-import { createCoinDocumentFromCoingeckoResponse } from '../models/coin-info';
 import {
      filterCoinInfoOnExchange,
      filterCoinDuplicated,

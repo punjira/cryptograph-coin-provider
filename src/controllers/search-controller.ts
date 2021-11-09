@@ -1,5 +1,5 @@
 import { InternalServerError } from '@cryptograph-app/error-handlers';
-import { Coin, CoinModel } from '../models/coin-info';
+import { CoinModel } from '../models/coin-info';
 
 export function simpleSearch(req, res, next) {
      const keyword = req.params.keyword;

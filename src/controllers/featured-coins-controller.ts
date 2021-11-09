@@ -1,5 +1,5 @@
 import { InternalServerError } from '@cryptograph-app/error-handlers';
-import { Coin, CoinModel } from '../models/coin-info';
+import { CoinModel } from '../models/coin-info';
 
 export function getTopTen(req, res, next) {
      CoinModel.find({})
