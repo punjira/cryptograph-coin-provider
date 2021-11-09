@@ -12,13 +12,6 @@ import {
 
 const fs = require('fs');
 
-export interface CoinGeckoCoinListResponse {
-     id: string;
-     symbol: string;
-     name: string;
-     image: string;
-}
-
 const getCoinMarketsPage = (
      page: number
 ): Promise<CoinGeckoCoinListResponse[]> => {
